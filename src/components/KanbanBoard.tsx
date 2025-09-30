@@ -81,7 +81,7 @@ const KanbanBoard = ({ tasks, onEditTask, onDeleteTask, onCreateTask, onUpdateTa
           const columnTasks = getTasksByStatus(column.status);
           
           return (
-            <Card key={column.status} className={cn('flex flex-col border-t-4', column.color)}>
+            <Card key={column.status} className={cn('flex flex-col border-t-4 min-h-[600px]', column.color)}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg font-semibold">
@@ -101,7 +101,7 @@ const KanbanBoard = ({ tasks, onEditTask, onDeleteTask, onCreateTask, onUpdateTa
                 </div>
               </CardHeader>
               <DropZone status={column.status}>
-                <CardContent className="flex-1 space-y-3 overflow-y-auto max-h-[calc(100vh-300px)]">
+                <CardContent className="flex-1 space-y-3 overflow-y-auto max-h-[calc(100vh-250px)]">
                   {columnTasks.length === 0 ? (
                     <div className="text-center text-sm text-muted-foreground py-8">
                       No tasks yet
