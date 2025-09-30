@@ -2,9 +2,11 @@ import { Task, TaskType } from '@/types';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, User } from 'lucide-react';
+import { Pencil, Trash2, User, GripVertical } from 'lucide-react';
 import { mockUsers } from '@/data/mockUsers';
 import { cn } from '@/lib/utils';
+import { useDraggable } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 
 interface TaskCardProps {
   task: Task;
@@ -22,13 +24,38 @@ const TaskCard = ({ task, onEdit, onDelete }: TaskCardProps) => {
   const assignee = mockUsers.find((u) => u.id === task.assigneeId);
   const typeConfig = taskTypeConfig[task.type];
 
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: task.id,
+  });
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    opacity: isDragging ? 0.5 : 1,
+  };
+
   return (
-    <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer group">
+    <Card
+      ref={setNodeRef}
+      style={style}
+      className={cn(
+        'p-4 hover:shadow-md transition-all cursor-move group',
+        isDragging && 'shadow-xl ring-2 ring-primary/30'
+      )}
+    >
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-foreground line-clamp-2 flex-1">
-            {task.title}
-          </h3>
+          <div className="flex items-start gap-2 flex-1 min-w-0">
+            <div
+              {...attributes}
+              {...listeners}
+              className="mt-1 text-muted-foreground hover:text-foreground transition-colors cursor-grab active:cursor-grabbing"
+            >
+              <GripVertical className="h-4 w-4" />
+            </div>
+            <h3 className="font-semibold text-foreground line-clamp-2 flex-1">
+              {task.title}
+            </h3>
+          </div>
           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button
               variant="ghost"

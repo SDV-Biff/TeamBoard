@@ -152,6 +152,13 @@ const Dashboard = () => {
           onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTask}
           onCreateTask={handleCreateTask}
+          onUpdateTaskStatus={(taskId, newStatus) => {
+            updateTask(taskId, { status: newStatus });
+            toast({
+              title: 'Task moved',
+              description: `Task status updated successfully.`,
+            });
+          }}
         />
       </main>
 
