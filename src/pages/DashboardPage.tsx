@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import Login from '@/components/Login';
+import Dashboard from '@/components/Dashboard';
 
-const Index = () => {
+const DashboardPage = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
+    if (!isAuthenticated) {
+      navigate('/', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
-  return <Login />;
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  return <Dashboard />;
 };
 
-export default Index;
+export default DashboardPage;
