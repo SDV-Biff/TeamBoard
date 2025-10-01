@@ -16,7 +16,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = (username: string, password: string): boolean => {
-    const foundUser = mockUsers.find(
+    const allUsers = storage.getUsers();
+    const foundUser = allUsers.find(
       (u) => u.username === username && u.password === password
     );
 

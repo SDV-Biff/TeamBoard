@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Pencil, Trash2, User, GripVertical } from 'lucide-react';
-import { mockUsers } from '@/data/mockUsers';
+import { storage } from '@/utils/localStorage';
 import { cn } from '@/lib/utils';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
@@ -16,12 +16,12 @@ interface TaskCardProps {
 
 const taskTypeConfig: Record<TaskType, { label: string; className: string }> = {
   bug: { label: 'Bug', className: 'bg-destructive text-destructive-foreground' },
-  feature: { label: 'Feature', className: 'bg-primary text-primary-foreground' },
-  improvement: { label: 'Improvement', className: 'bg-success text-success-foreground' },
+  feature: { label: 'Fonctionnalité', className: 'bg-primary text-primary-foreground' },
+  improvement: { label: 'Amélioration', className: 'bg-success text-success-foreground' },
 };
 
 const TaskCard = ({ task, onEdit, onDelete }: TaskCardProps) => {
-  const assignee = mockUsers.find((u) => u.id === task.assigneeId);
+  const assignee = storage.getUsers().find((u) => u.id === task.assigneeId);
   const typeConfig = taskTypeConfig[task.type];
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
@@ -38,8 +38,8 @@ const TaskCard = ({ task, onEdit, onDelete }: TaskCardProps) => {
       ref={setNodeRef}
       style={style}
       className={cn(
-        'p-4 hover:shadow-md transition-all cursor-move group',
-        isDragging && 'shadow-xl ring-2 ring-primary/30'
+        'p-4 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-move group animate-slide-up',
+        isDragging && 'shadow-xl ring-2 ring-primary/30 scale-105'
       )}
     >
       <div className="space-y-3">

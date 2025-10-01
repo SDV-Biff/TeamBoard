@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { mockUsers } from '@/data/mockUsers';
+import { storage } from '@/utils/localStorage';
 import logo from '@/assets/logo.png';
 
 const SignUp = () => {
@@ -32,8 +32,9 @@ const SignUp = () => {
     if (!validateEmail(email)) {
       toast({
         variant: 'destructive',
-        title: 'Invalid email',
-        description: 'Please enter a valid email address.',
+        title: 'Email invalide',
+        description: 'Veuillez entrer une adresse email valide.',
+        duration: 5000,
       });
       return;
     }
@@ -42,8 +43,9 @@ const SignUp = () => {
     if (!validatePassword(password)) {
       toast({
         variant: 'destructive',
-        title: 'Weak password',
-        description: 'Password must be at least 6 characters long.',
+        title: 'Mot de passe faible',
+        description: 'Le mot de passe doit contenir au moins 6 caractères.',
+        duration: 5000,
       });
       return;
     }
@@ -52,51 +54,66 @@ const SignUp = () => {
     if (password !== confirmPassword) {
       toast({
         variant: 'destructive',
-        title: 'Password mismatch',
-        description: 'Passwords do not match. Please try again.',
+        title: 'Erreur',
+        description: 'Les mots de passe ne correspondent pas.',
+        duration: 5000,
       });
       return;
     }
 
     // Vérification si l'email existe déjà
-    const emailExists = mockUsers.some((user) => user.username === email);
+    const allUsers = storage.getUsers();
+    const emailExists = allUsers.some((user) => user.username === email);
     if (emailExists) {
       toast({
         variant: 'destructive',
-        title: 'Account already exists',
-        description: 'An account with this email already exists.',
+        title: 'Compte existant',
+        description: 'Un compte avec cet email existe déjà.',
+        duration: 5000,
       });
       return;
     }
 
-    // Succès - dans une vraie app, on sauvegarderait l'utilisateur
+    // Créer et sauvegarder le nouvel utilisateur
+    const newUser = {
+      id: String(Date.now()),
+      username: email,
+      password: password,
+      name: name,
+    };
+
+    storage.saveUser(newUser);
+
+    // Succès
     toast({
-      title: 'Account created!',
-      description: 'Your account has been successfully created. Please sign in.',
+      title: 'Compte créé !',
+      description: 'Vous pouvez maintenant vous connecter.',
+      duration: 5000,
+      className: 'bg-success text-success-foreground border-success',
     });
     navigate('/');
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
-      <Card className="w-full max-w-md shadow-xl">
+      <Card className="w-full max-w-md shadow-xl animate-fade-in">
         <CardHeader className="space-y-3 text-center">
           <div className="mx-auto w-20 h-20 flex items-center justify-center">
             <img src={logo} alt="TeamBoard Logo" className="w-full h-full object-contain" />
           </div>
-          <CardTitle className="text-3xl font-bold">Create Account</CardTitle>
+          <CardTitle className="text-3xl font-bold">Créer un compte</CardTitle>
           <CardDescription className="text-base">
-            Sign up to start managing your tasks
+            Rejoignez TeamBoard pour gérer vos tâches
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Nom complet</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="Enter your full name"
+                placeholder="Entrez votre nom complet"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -108,7 +125,7 @@ const SignUp = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Entrez votre email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -116,11 +133,11 @@ const SignUp = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Mot de passe</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter your password (min. 6 characters)"
+                placeholder="Entrez votre mot de passe (min. 6 caractères)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -129,11 +146,11 @@ const SignUp = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
               <Input
                 id="confirmPassword"
                 type="password"
-                placeholder="Confirm your password"
+                placeholder="Confirmez votre mot de passe"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -147,23 +164,23 @@ const SignUp = () => {
                 onClick={() => navigate('/')}
                 className="flex-1 h-11 text-base font-medium"
               >
-                Cancel
+                Annuler
               </Button>
               <Button type="submit" className="flex-1 h-11 text-base font-medium">
-                Sign Up
+                S'inscrire
               </Button>
             </div>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              Already have an account?{' '}
+              Vous avez déjà un compte ?{' '}
               <Button
                 variant="link"
                 className="p-0 h-auto font-semibold"
                 onClick={() => navigate('/')}
               >
-                Sign in
+                Se connecter
               </Button>
             </p>
           </div>

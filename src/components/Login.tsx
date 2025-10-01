@@ -20,39 +20,42 @@ const Login = () => {
     
     if (login(username, password)) {
       toast({
-        title: 'Welcome back!',
-        description: 'Successfully logged in.',
+        title: 'Connexion réussie !',
+        description: 'Bienvenue sur TeamBoard.',
+        duration: 5000,
+        className: 'bg-success text-success-foreground border-success',
       });
       navigate('/dashboard');
     } else {
       toast({
         variant: 'destructive',
-        title: 'Login failed',
-        description: 'Invalid username or password.',
+        title: 'Échec de connexion',
+        description: 'Nom d\'utilisateur ou mot de passe incorrect.',
+        duration: 5000,
       });
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
-      <Card className="w-full max-w-md shadow-xl">
+      <Card className="w-full max-w-md shadow-xl animate-fade-in">
         <CardHeader className="space-y-3 text-center">
           <div className="mx-auto w-20 h-20 flex items-center justify-center">
             <img src={logo} alt="TeamBoard Logo" className="w-full h-full object-contain" />
           </div>
-          <CardTitle className="text-3xl font-bold">Welcome Back</CardTitle>
+          <CardTitle className="text-3xl font-bold">Bienvenue</CardTitle>
           <CardDescription className="text-base">
-            Sign in to manage your tasks
+            Connectez-vous pour gérer vos tâches
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">Nom d'utilisateur</Label>
               <Input
                 id="username"
                 type="text"
-                placeholder="Enter your username"
+                placeholder="Entrez votre nom d'utilisateur"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -60,11 +63,11 @@ const Login = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Mot de passe</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Entrez votre mot de passe"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -72,25 +75,25 @@ const Login = () => {
               />
             </div>
             <Button type="submit" className="w-full h-11 text-base font-medium">
-              Sign In
+              Se connecter
             </Button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{' '}
+              Pas encore de compte ?{' '}
               <Button
                 variant="link"
                 className="p-0 h-auto font-semibold"
                 onClick={() => navigate('/signup')}
               >
-                Create account
+                Créer un compte
               </Button>
             </p>
           </div>
           
           <div className="mt-4 p-4 bg-muted rounded-lg">
-            <p className="text-sm font-medium mb-2 text-foreground">Demo Accounts:</p>
+            <p className="text-sm font-medium mb-2 text-foreground">Comptes de démonstration :</p>
             <div className="space-y-1 text-sm text-muted-foreground">
               <p><span className="font-medium">Admin:</span> admin / admin123</p>
               <p><span className="font-medium">John:</span> john / john123</p>

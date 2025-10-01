@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Task, TaskStatus, TaskType } from '@/types';
-import { mockUsers } from '@/data/mockUsers';
+import { storage } from '@/utils/localStorage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -81,18 +81,18 @@ const TaskForm = ({ open, onOpenChange, onSubmit, task, initialStatus }: TaskFor
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>{task ? 'Edit Task' : 'Create New Task'}</DialogTitle>
+          <DialogTitle>{task ? 'Modifier la tâche' : 'Créer une nouvelle tâche'}</DialogTitle>
           <DialogDescription>
-            {task ? 'Update the task details below.' : 'Fill in the details to create a new task.'}
+            {task ? 'Modifiez les détails de la tâche ci-dessous.' : 'Remplissez les détails pour créer une nouvelle tâche.'}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Title *</Label>
+              <Label htmlFor="title">Titre *</Label>
               <Input
                 id="title"
-                placeholder="Task title"
+                placeholder="Titre de la tâche"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
@@ -103,7 +103,7 @@ const TaskForm = ({ open, onOpenChange, onSubmit, task, initialStatus }: TaskFor
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
-                placeholder="Task description"
+                placeholder="Description de la tâche"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
@@ -119,8 +119,8 @@ const TaskForm = ({ open, onOpenChange, onSubmit, task, initialStatus }: TaskFor
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="bug">Bug</SelectItem>
-                    <SelectItem value="feature">Feature</SelectItem>
-                    <SelectItem value="improvement">Improvement</SelectItem>
+                    <SelectItem value="feature">Fonctionnalité</SelectItem>
+                    <SelectItem value="improvement">Amélioration</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -132,23 +132,23 @@ const TaskForm = ({ open, onOpenChange, onSubmit, task, initialStatus }: TaskFor
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="todo">To Do</SelectItem>
-                    <SelectItem value="inProgress">In Progress</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                    <SelectItem value="done">Done</SelectItem>
+                    <SelectItem value="todo">À faire</SelectItem>
+                    <SelectItem value="inProgress">En cours</SelectItem>
+                    <SelectItem value="cancelled">Annulé</SelectItem>
+                    <SelectItem value="done">Terminé</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="assignee">Assignee *</Label>
+              <Label htmlFor="assignee">Assigné à *</Label>
               <Select value={assigneeId} onValueChange={setAssigneeId}>
                 <SelectTrigger id="assignee">
-                  <SelectValue placeholder="Select assignee" />
+                  <SelectValue placeholder="Sélectionner un assigné" />
                 </SelectTrigger>
                 <SelectContent>
-                  {mockUsers.map((user) => (
+                  {storage.getUsers().map((user) => (
                     <SelectItem key={user.id} value={user.id}>
                       {user.name}
                     </SelectItem>
@@ -160,10 +160,10 @@ const TaskForm = ({ open, onOpenChange, onSubmit, task, initialStatus }: TaskFor
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Cancel
+              Annuler
             </Button>
             <Button type="submit">
-              {task ? 'Update Task' : 'Create Task'}
+              {task ? 'Mettre à jour' : 'Créer'}
             </Button>
           </DialogFooter>
         </form>

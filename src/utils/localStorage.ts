@@ -3,6 +3,7 @@ import { Task, User } from '@/types';
 const STORAGE_KEYS = {
   TASKS: 'teamboard_tasks',
   CURRENT_USER: 'teamboard_current_user',
+  USERS: 'teamboard_users',
 };
 
 export const storage = {
@@ -28,5 +29,22 @@ export const storage = {
     } else {
       localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
     }
+  },
+
+  // Users (for registration)
+  getUsers: (): User[] => {
+    const users = localStorage.getItem(STORAGE_KEYS.USERS);
+    if (users) {
+      return JSON.parse(users);
+    }
+    // Return mockUsers as default
+    const { mockUsers } = require('@/data/mockUsers');
+    return mockUsers;
+  },
+
+  saveUser: (user: User): void => {
+    const users = storage.getUsers();
+    users.push(user);
+    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
   },
 };

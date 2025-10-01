@@ -26,10 +26,10 @@ interface KanbanBoardProps {
 }
 
 const columns: { status: TaskStatus; title: string; color: string }[] = [
-  { status: 'todo', title: 'To Do', color: 'border-t-muted-foreground' },
-  { status: 'inProgress', title: 'In Progress', color: 'border-t-primary' },
-  { status: 'cancelled', title: 'Cancelled', color: 'border-t-destructive' },
-  { status: 'done', title: 'Done', color: 'border-t-success' },
+  { status: 'todo', title: 'À faire', color: 'border-t-muted-foreground' },
+  { status: 'inProgress', title: 'En cours', color: 'border-t-primary' },
+  { status: 'cancelled', title: 'Annulé', color: 'border-t-destructive' },
+  { status: 'done', title: 'Terminé', color: 'border-t-success' },
 ];
 
 const KanbanBoard = ({ tasks, onEditTask, onDeleteTask, onCreateTask, onUpdateTaskStatus }: KanbanBoardProps) => {
@@ -76,7 +76,7 @@ const KanbanBoard = ({ tasks, onEditTask, onDeleteTask, onCreateTask, onUpdateTa
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in">
         {columns.map((column) => {
           const columnTasks = getTasksByStatus(column.status);
           
@@ -104,7 +104,7 @@ const KanbanBoard = ({ tasks, onEditTask, onDeleteTask, onCreateTask, onUpdateTa
                 <CardContent className="flex-1 space-y-3 overflow-y-auto max-h-[calc(100vh-280px)] min-h-[350px]">
                   {columnTasks.length === 0 ? (
                     <div className="text-center text-sm text-muted-foreground py-8">
-                      No tasks yet
+                      Aucune tâche
                     </div>
                   ) : (
                     columnTasks.map((task) => (

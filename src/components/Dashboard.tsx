@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTasks } from '@/contexts/TaskContext';
 import { Task, TaskStatus } from '@/types';
-import { mockUsers } from '@/data/mockUsers';
+import { storage } from '@/utils/localStorage';
 import KanbanBoard from './KanbanBoard';
 import TaskForm from './TaskForm';
 import { Button } from '@/components/ui/button';
@@ -34,8 +34,10 @@ const Dashboard = () => {
     logout();
     navigate('/');
     toast({
-      title: 'Logged out',
-      description: 'You have been successfully logged out.',
+      title: 'Déconnexion réussie',
+      description: 'À bientôt sur TeamBoard !',
+      duration: 5000,
+      className: 'bg-primary text-primary-foreground border-primary',
     });
   };
 
@@ -54,8 +56,10 @@ const Dashboard = () => {
   const handleDeleteTask = (id: string) => {
     deleteTask(id);
     toast({
-      title: 'Task deleted',
-      description: 'The task has been removed.',
+      title: 'Tâche supprimée',
+      description: 'La tâche a été supprimée avec succès.',
+      duration: 5000,
+      className: 'bg-destructive text-destructive-foreground border-destructive',
     });
   };
 
@@ -63,14 +67,18 @@ const Dashboard = () => {
     if (editingTask) {
       updateTask(editingTask.id, taskData);
       toast({
-        title: 'Task updated',
-        description: 'The task has been successfully updated.',
+        title: 'Tâche mise à jour',
+        description: 'La tâche a été modifiée avec succès.',
+        duration: 5000,
+        className: 'bg-success text-success-foreground border-success',
       });
     } else {
       addTask(taskData);
       toast({
-        title: 'Task created',
-        description: 'A new task has been added.',
+        title: 'Tâche créée',
+        description: 'Une nouvelle tâche a été ajoutée.',
+        duration: 5000,
+        className: 'bg-success text-success-foreground border-success',
       });
     }
   };
@@ -93,12 +101,12 @@ const Dashboard = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-foreground">TeamBoard</h1>
-                <p className="text-sm text-muted-foreground">Welcome back, {user?.name}</p>
+                <p className="text-sm text-muted-foreground">Bienvenue, {user?.name}</p>
               </div>
             </div>
             <Button variant="outline" onClick={handleLogout} className="gap-2">
               <LogOut className="h-4 w-4" />
-              Logout
+              Se déconnecter
             </Button>
           </div>
         </div>
@@ -115,11 +123,11 @@ const Dashboard = () => {
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="todo">To Do</SelectItem>
-                  <SelectItem value="inProgress">In Progress</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
-                  <SelectItem value="done">Done</SelectItem>
+                  <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="todo">À faire</SelectItem>
+                  <SelectItem value="inProgress">En cours</SelectItem>
+                  <SelectItem value="cancelled">Annulé</SelectItem>
+                  <SelectItem value="done">Terminé</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -128,8 +136,8 @@ const Dashboard = () => {
                   <SelectValue placeholder="Filter by assignee" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Assignees</SelectItem>
-                  {mockUsers.map((user) => (
+                  <SelectItem value="all">Tous les assignés</SelectItem>
+                  {storage.getUsers().map((user) => (
                     <SelectItem key={user.id} value={user.id}>
                       {user.name}
                     </SelectItem>
@@ -140,7 +148,7 @@ const Dashboard = () => {
 
             <Button onClick={() => handleCreateTask()} className="gap-2">
               <Plus className="h-4 w-4" />
-              New Task
+              Nouvelle tâche
             </Button>
           </div>
         </div>
@@ -156,8 +164,10 @@ const Dashboard = () => {
           onUpdateTaskStatus={(taskId, newStatus) => {
             updateTask(taskId, { status: newStatus });
             toast({
-              title: 'Task moved',
-              description: `Task status updated successfully.`,
+              title: 'Tâche déplacée',
+              description: `Le statut de la tâche a été mis à jour.`,
+              duration: 5000,
+              className: 'bg-primary text-primary-foreground border-primary',
             });
           }}
         />
