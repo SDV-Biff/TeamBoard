@@ -46,18 +46,18 @@ describe('Login', () => {
   it('should render login form correctly', () => {
     renderWithRouter(<Login />);
 
-    expect(screen.getByText('Welcome Back')).toBeInTheDocument();
-    expect(screen.getByText('Sign in to manage your tasks')).toBeInTheDocument();
-    expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
+    expect(screen.getByText('Bienvenue')).toBeInTheDocument();
+    expect(screen.getByText('Connectez-vous pour gérer vos tâches')).toBeInTheDocument();
+    expect(screen.getByLabelText(/nom d'utilisateur/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/mot de passe/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /se connecter/i })).toBeInTheDocument();
   });
 
   it('should update input values when typing', () => {
     renderWithRouter(<Login />);
 
-    const usernameInput = screen.getByLabelText(/username/i) as HTMLInputElement;
-    const passwordInput = screen.getByLabelText(/password/i) as HTMLInputElement;
+    const usernameInput = screen.getByLabelText(/nom d'utilisateur/i) as HTMLInputElement;
+    const passwordInput = screen.getByLabelText(/mot de passe/i) as HTMLInputElement;
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'testpass' } });
@@ -71,9 +71,9 @@ describe('Login', () => {
     
     renderWithRouter(<Login />);
 
-    const usernameInput = screen.getByLabelText(/username/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole('button', { name: /sign in/i });
+    const usernameInput = screen.getByLabelText(/nom d'utilisateur/i);
+    const passwordInput = screen.getByLabelText(/mot de passe/i);
+    const submitButton = screen.getByRole('button', { name: /se connecter/i });
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'testpass' } });
@@ -87,9 +87,9 @@ describe('Login', () => {
     
     renderWithRouter(<Login />);
 
-    const usernameInput = screen.getByLabelText(/username/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole('button', { name: /sign in/i });
+    const usernameInput = screen.getByLabelText(/nom d'utilisateur/i);
+    const passwordInput = screen.getByLabelText(/mot de passe/i);
+    const submitButton = screen.getByRole('button', { name: /se connecter/i });
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'testpass' } });
@@ -105,9 +105,9 @@ describe('Login', () => {
     
     renderWithRouter(<Login />);
 
-    const usernameInput = screen.getByLabelText(/username/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole('button', { name: /sign in/i });
+    const usernameInput = screen.getByLabelText(/nom d'utilisateur/i);
+    const passwordInput = screen.getByLabelText(/mot de passe/i);
+    const submitButton = screen.getByRole('button', { name: /se connecter/i });
 
     fireEvent.change(usernameInput, { target: { value: 'wronguser' } });
     fireEvent.change(passwordInput, { target: { value: 'wrongpass' } });
@@ -121,9 +121,9 @@ describe('Login', () => {
     
     renderWithRouter(<Login />);
 
-    const form = screen.getByRole('button', { name: /sign in/i }).closest('form');
-    const usernameInput = screen.getByLabelText(/username/i);
-    const passwordInput = screen.getByLabelText(/password/i);
+    const form = screen.getByRole('button', { name: /se connecter/i }).closest('form');
+    const usernameInput = screen.getByLabelText(/nom d'utilisateur/i);
+    const passwordInput = screen.getByLabelText(/mot de passe/i);
 
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'testpass' } });
@@ -137,7 +137,7 @@ describe('Login', () => {
   it('should handle empty form submission', () => {
     renderWithRouter(<Login />);
 
-    const form = screen.getByRole('button', { name: /sign in/i }).closest('form');
+    const form = screen.getByRole('button', { name: /se connecter/i }).closest('form');
     
     if (form) {
       fireEvent.submit(form);
@@ -148,8 +148,8 @@ describe('Login', () => {
   it('should display login form elements with correct attributes', () => {
     renderWithRouter(<Login />);
 
-    const usernameInput = screen.getByLabelText(/username/i);
-    const passwordInput = screen.getByLabelText(/password/i);
+    const usernameInput = screen.getByLabelText(/nom d'utilisateur/i);
+    const passwordInput = screen.getByLabelText(/mot de passe/i);
 
     expect(usernameInput).toHaveAttribute('type', 'text');
     expect(passwordInput).toHaveAttribute('type', 'password');
@@ -158,7 +158,7 @@ describe('Login', () => {
   it('should render signup link', () => {
     renderWithRouter(<Login />);
 
-    expect(screen.getByText(/don't have an account/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /create account/i })).toBeInTheDocument();
+    expect(screen.getByText(/pas encore de compte/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /créer un compte/i })).toBeInTheDocument();
   });
 });

@@ -1,4 +1,5 @@
 import { Task, User } from '@/types';
+import { mockUsers } from '@/data/mockUsers';
 
 const STORAGE_KEYS = {
   TASKS: 'teamboard_tasks',
@@ -37,9 +38,8 @@ export const storage = {
     if (users) {
       return JSON.parse(users);
     }
-    // Return mockUsers as default
-    const { mockUsers } = require('@/data/mockUsers');
-    return mockUsers;
+    // Return mockUsers as default (clone to avoid accidental mutations)
+    return mockUsers.map((user) => ({ ...user }));
   },
 
   saveUser: (user: User): void => {
