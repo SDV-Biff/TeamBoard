@@ -8,6 +8,7 @@ import { TaskProvider } from "./contexts/TaskContext";
 import Index from "./pages/Index";
 import DashboardPage from "./pages/DashboardPage";
 import NotFound from "./pages/NotFound";
+import SignUp from "./components/SignUp";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/signup" element={<SignUp />} />
               <Route path="/dashboard" element={<DashboardPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

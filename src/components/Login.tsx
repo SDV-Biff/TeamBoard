@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { CheckCircle2 } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -37,10 +37,10 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="space-y-3 text-center">
-          <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <CheckCircle2 className="w-6 h-6 text-primary" />
+          <div className="mx-auto w-20 h-20 flex items-center justify-center">
+            <img src={logo} alt="TeamBoard Logo" className="w-full h-full object-contain" />
           </div>
-          <CardTitle className="text-3xl font-bold">TeamBoard</CardTitle>
+          <CardTitle className="text-3xl font-bold">Welcome Back</CardTitle>
           <CardDescription className="text-base">
             Sign in to manage your tasks
           </CardDescription>
@@ -75,8 +75,21 @@ const Login = () => {
               Sign In
             </Button>
           </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-sm text-muted-foreground">
+              Don't have an account?{' '}
+              <Button
+                variant="link"
+                className="p-0 h-auto font-semibold"
+                onClick={() => navigate('/signup')}
+              >
+                Create account
+              </Button>
+            </p>
+          </div>
           
-          <div className="mt-6 p-4 bg-muted rounded-lg">
+          <div className="mt-4 p-4 bg-muted rounded-lg">
             <p className="text-sm font-medium mb-2 text-foreground">Demo Accounts:</p>
             <div className="space-y-1 text-sm text-muted-foreground">
               <p><span className="font-medium">Admin:</span> admin / admin123</p>
