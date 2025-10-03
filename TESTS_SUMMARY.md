@@ -2,7 +2,7 @@
 
 ## Résumé de l'implémentation
 
-J'ai créé une suite complète de tests unitaires pour votre application TeamBoard avec **48 tests** qui couvrent toutes les fonctionnalités principales.
+Suite complète de tests unitaires pour l'application TeamBoard avec **48 tests** qui couvrent toutes les fonctionnalités principales.
 
 ## 📋 Tests créés
 
@@ -123,5 +123,3 @@ Utilisation des queries par rôle et label pour garantir l'accessibilité.
 4. **Facilité de maintenance** : Structure claire et utilitaires réutilisables
 5. **Performance** : Tests rapides avec cleanup automatique
 6. **Documentation** : Guide complet pour maintenir et étendre
-
-Cette suite de tests vous donne une base solide pour maintenir la qualité de votre code et détecter les régressions lors des futures modifications ! 🎯

@@ -69,7 +69,7 @@ describe('TaskCard', () => {
 
     expect(screen.getByText('Test Task')).toBeInTheDocument();
     expect(screen.getByText('This is a test task description')).toBeInTheDocument();
-    expect(screen.getByText('Feature')).toBeInTheDocument();
+    expect(screen.getByText('Fonctionnalité')).toBeInTheDocument();
     expect(screen.getByText('Test User')).toBeInTheDocument();
   });
 
@@ -94,7 +94,7 @@ describe('TaskCard', () => {
       />
     );
 
-    expect(screen.getByText('Improvement')).toBeInTheDocument();
+    expect(screen.getByText('Amélioration')).toBeInTheDocument();
   });
 
   it('should call onEdit when edit button is clicked', () => {

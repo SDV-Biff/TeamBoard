@@ -10,6 +10,8 @@ vi.mock('@/utils/localStorage', () => ({
   storage: {
     getCurrentUser: vi.fn(),
     saveCurrentUser: vi.fn(),
+    getUsers: vi.fn(),
+    saveUser: vi.fn(),
   },
 }));
 
@@ -70,6 +72,20 @@ describe('AuthContext', () => {
   describe('login function', () => {
     it('should login with valid credentials', () => {
       (storage.getCurrentUser as any).mockReturnValue(null);
+      (storage.getUsers as any).mockReturnValue([
+        {
+          id: '1',
+          username: 'testuser',
+          password: 'testpass',
+          name: 'Test User',
+        },
+        {
+          id: '2',
+          username: 'admin',
+          password: 'admin123',
+          name: 'Admin User',
+        },
+      ]);
 
       const { result } = renderHook(() => useAuth(), { wrapper });
 
@@ -95,6 +111,20 @@ describe('AuthContext', () => {
 
     it('should not login with invalid credentials', () => {
       (storage.getCurrentUser as any).mockReturnValue(null);
+      (storage.getUsers as any).mockReturnValue([
+        {
+          id: '1',
+          username: 'testuser',
+          password: 'testpass',
+          name: 'Test User',
+        },
+        {
+          id: '2',
+          username: 'admin',
+          password: 'admin123',
+          name: 'Admin User',
+        },
+      ]);
 
       const { result } = renderHook(() => useAuth(), { wrapper });
 
@@ -110,6 +140,20 @@ describe('AuthContext', () => {
 
     it('should not login with valid username but invalid password', () => {
       (storage.getCurrentUser as any).mockReturnValue(null);
+      (storage.getUsers as any).mockReturnValue([
+        {
+          id: '1',
+          username: 'testuser',
+          password: 'testpass',
+          name: 'Test User',
+        },
+        {
+          id: '2',
+          username: 'admin',
+          password: 'admin123',
+          name: 'Admin User',
+        },
+      ]);
 
       const { result } = renderHook(() => useAuth(), { wrapper });
 
@@ -124,6 +168,20 @@ describe('AuthContext', () => {
 
     it('should clear password from saved user data', () => {
       (storage.getCurrentUser as any).mockReturnValue(null);
+      (storage.getUsers as any).mockReturnValue([
+        {
+          id: '1',
+          username: 'testuser',
+          password: 'testpass',
+          name: 'Test User',
+        },
+        {
+          id: '2',
+          username: 'admin',
+          password: 'admin123',
+          name: 'Admin User',
+        },
+      ]);
 
       const { result } = renderHook(() => useAuth(), { wrapper });
 
